@@ -5,7 +5,8 @@ import mongoose from "mongoose"
 import cors from 'cors';
 const app=express();
 app.use(cors());
-mongoose.connect("mongodb://localhost:27017/users",{useNewUrlParser:true});
+app.use(express.json());
+mongoose.connect("mongodb+srv://MMP:MMP123@cluster0.fdebt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",{useNewUrlParser:true});
 
 
 // app.post("/",function(res,req){
@@ -14,7 +15,7 @@ mongoose.connect("mongodb://localhost:27017/users",{useNewUrlParser:true});
 // 	console.log(email);
 // 	console.log(password);
 // });
-app.use("/Register",userRoutes);
+app.use("/",userRoutes);
 
 app.listen(8000,function(){
 	console.log("runnig");
