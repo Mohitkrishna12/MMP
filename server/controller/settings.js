@@ -19,9 +19,10 @@ export const createSettings = async (req, res) => {
         await newSettingsMessage.save();
         await updhis_setting.save();
         res.status(201).json(newSettingsMessage );
-        console.log(newSettingsMessage);
+        console.log(res.statusCode)
     } catch (error) {
         res.status(409).json({ message: error.message });
+        console.log(res.statusCode)
     }
 }
 
