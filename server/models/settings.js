@@ -4,8 +4,8 @@ const settingsSchema = mongoose.Schema({
     dmess: String,
     service:Boolean,
     admin:String,
-    bankfield:String,
-    createdAt: {
+    brandfield:String,
+    timeStamp: {
         type : String, default: Date.now 
     }
 },
