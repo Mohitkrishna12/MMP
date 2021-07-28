@@ -5,6 +5,8 @@ import settingsMessage from '../models/settings.js';
 import his_settings from "../models/his_settings.js";
 import bfieldMessage from "../models/bfield.js";
 import his_bfieldMessages from "../models/his_bfield.js"
+import masterdb from "../models/masterdb.js"
+import topupMessages from '../models/topup.js'
 
 const router = express.Router();
 
@@ -21,7 +23,6 @@ export const createSettings = async (req, res) => {
         await newSettingsMessage.save();
         await updhis_setting.save();
         res.status(201).json(newSettingsMessage );
-        console.log(newSettingsMessage)
     } catch (error) {
         res.status(409).json({ message: error.message });
         
@@ -47,7 +48,6 @@ export const createBfield = async (req, res) => {
         await newBfieldMessage.save();
         await new_hisBfieldMessage.save();
         res.status(201).json(newBfieldMessage );
-        console.log(newBfieldMessage)
     } catch (error) {
         res.status(409).json({ message: error.message });
         
@@ -62,5 +62,39 @@ export const getBfield = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 }
+
+export const getMasterdb = async (req, res) => { 
+    try {
+        const newOptions = await masterdb.find({}).sort({_id:-1}).limit(1);
+        res.status(200).json(newOptions);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+export const createTopup = async (req, res) => {
+    const post = req.body;
+    const filter=post.source;
+    const new_topupMessage ={ ...post, timeStamp: new Date().toLocaleString() };
+   
+    try {
+        
+        await topupMessages.findOneAndUpdate(filter, new_topupMessage);
+        res.status(201).json(new_topupMessage);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+        
+    }
+}
+
+export const getTopup = async (req, res) => { 
+    try {
+        const newOptions = await topupMessages.find({});
+        res.status(200).json(newOptions);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
 
 export default router;
